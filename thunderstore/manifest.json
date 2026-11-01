@@ -1,0 +1,9 @@
+{
+  "name": "PeglinQuickRestart",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/PierreMaraisZA/PeglinQuickRestart",
+  "description": "Hold X to restart your run with the same class, Cruciball level, loadout and custom seed (or a new random seed).",
+  "dependencies": [
+    "BepInEx-BepInExPack_Peglin-5.4.2100"
+  ]
+}
