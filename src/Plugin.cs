@@ -12,11 +12,12 @@ namespace PeglinQuickRestart
         // BepInEx names the config file after the GUID, so this gives BepInEx/config/PeglinQuickRestart.cfg.
         public const string Guid = "PeglinQuickRestart";
         public const string Name = "PeglinQuickRestart";
-        public const string Version = "1.0.0";
+        public const string Version = "1.1.0";
 
         internal static ManualLogSource Log;
 
         internal static ConfigEntry<KeyboardShortcut> RestartKey;
+        internal static ConfigEntry<KeyboardShortcut> ControllerRestartButton;
         internal static ConfigEntry<float> HoldSeconds;
         internal static ConfigEntry<bool> ShowHoldProgress;
 
@@ -27,6 +28,9 @@ namespace PeglinQuickRestart
             RestartKey = Config.Bind("General", "RestartKey", new KeyboardShortcut(KeyCode.X),
                 "Hold this key to abandon the current run and start a new one with the same class, Cruciball level and loadout. " +
                 "A run started with a custom seed restarts on that seed; any other run gets a new random seed.");
+            ControllerRestartButton = Config.Bind("General", "ControllerRestartButton", new KeyboardShortcut(KeyCode.JoystickButton8),
+                "Controller button to hold for a restart. Default JoystickButton8 is clicking the left stick (L3) on Xbox-layout " +
+                "controllers, including PlayStation and other pads when Steam Input is on. Set to None to disable.");
             HoldSeconds = Config.Bind("General", "HoldSeconds", 1.5f,
                 "How long to hold the restart key, in real seconds (not affected by game speed or pause).");
             ShowHoldProgress = Config.Bind("General", "ShowHoldProgress", true,
@@ -39,7 +43,7 @@ namespace PeglinQuickRestart
             DontDestroyOnLoad(host);
             host.AddComponent<RestartKeyWatcher>();
 
-            Log.LogInfo($"{Name} {Version} loaded. Hold {RestartKey.Value} for {HoldSeconds.Value}s to restart the run.");
+            Log.LogInfo($"{Name} {Version} loaded. Hold {RestartKey.Value} or {ControllerRestartButton.Value} for {HoldSeconds.Value}s to restart the run.");
         }
     }
 }

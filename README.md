@@ -1,14 +1,15 @@
 # PeglinQuickRestart
 
-Bad start? Hold one key to try again.
+Bad start? Hold one button to try again.
 
 ## Features
 
-- **Hold X for 1.5 seconds to restart.** The run is abandoned and a new one starts straight away, without clicking through Abandon Run, the main menu, character select and Play.
+- **Hold X (or L3 on a controller) for 1.5 seconds to restart.** The run is abandoned and a new one starts straight away, without clicking through Abandon Run, the main menu, character select and Play.
 - **Same setup every time.** The new run uses the same class and Cruciball level as the one you left.
 - **Custom loadouts carry over.** If you edited your starting orbs or relics, the new run starts with the same ones.
 - **Seeds work like the game's.** A run started on a custom seed restarts on that same seed, so you can practise a seed over and over. Any other run gets a new random seed, just like pressing Play.
-- **No accidental restarts.** A countdown shows at the top of the screen while you hold the key. Let go before it ends to cancel.
+- **Controller support.** Hold **L3** (click the left stick). It's the one button Peglin leaves unbound, so it doesn't clash with anything.
+- **No accidental restarts.** A countdown shows at the top of the screen while you hold the key or button. Let go before it ends to cancel.
 - **Works anywhere in a run:** on the map, mid-battle, in shops and events, with the pause menu open, and on the game over screen. The hold time is real time, so game speed and pausing don't change it.
 - **Remembers your setup.** You can restart a run you continued after closing the game, not just one you started this session.
 - **Plays by the game's rules.** The restart goes through the game's own steps, so the new run is set up exactly like one you start by hand. Class unlock progress is saved, and achievements are on or off just as they would be (off for custom runs, as in the base game).
@@ -40,8 +41,9 @@ Change these in `BepInEx/config/PeglinQuickRestart.cfg` (start the game once to 
 | Setting | Default | What it does |
 |---|---|---|
 | `RestartKey` | X | Key to hold. Add modifiers to make it harder to hit by accident, e.g. `X + LeftControl`. [Key names](https://docs.unity3d.com/ScriptReference/KeyCode.html) |
-| `HoldSeconds` | 1.5 | How long to hold the key, in real seconds |
-| `ShowHoldProgress` | true | Show the countdown while the key is held |
+| `ControllerRestartButton` | JoystickButton8 (L3) | Controller button to hold. `None` turns it off |
+| `HoldSeconds` | 1.5 | How long to hold the key or button, in real seconds |
+| `ShowHoldProgress` | true | Show the countdown while the key or button is held |
 
 The mod also keeps the last run's setup in `BepInEx/config/PeglinQuickRestart.lastrun.txt`. It's safe to delete; you just won't be able to restart a custom run you continue later.
 
@@ -55,6 +57,7 @@ The mod also keeps the last run's setup in `BepInEx/config/PeglinQuickRestart.la
 - **A restart counts as abandoning the run.** Like Abandon Run, it resets your "reached the boss" streak if you hadn't reached the boss yet.
 - **Custom runs started before installing the mod** can't be restarted, because the mod doesn't know their loadout. Standard runs always can.
 - **If a restart fails partway** (for example after a game update), you're left on the main menu and the old run is already abandoned. The reason is shown on screen and written to `BepInEx/LogOutput.log`.
-- Keyboard only: there's no controller button for it.
-- The key does nothing on the main menu or while a screen is loading.
+- The controller button assumes an Xbox-style layout, which is what Steam Input uses. Without Steam Input, a PlayStation controller may need a different `ControllerRestartButton`.
+- Clicking the left stick can nudge your aim. If you let go early to cancel, check your aim before firing.
+- The key and button do nothing on the main menu or while a screen is loading.
 - English only.

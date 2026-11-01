@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- Controller support: hold L3 (click the left stick) to restart. Change it with the new `ControllerRestartButton` setting, or set it to `None` to turn it off.
+
 ## 1.0.0
 
 - First release: hold X for 1.5 seconds to restart the run with the same class, Cruciball level and custom loadout, on the same custom seed or a new random one, with an on-screen countdown and a configurable key and hold time.

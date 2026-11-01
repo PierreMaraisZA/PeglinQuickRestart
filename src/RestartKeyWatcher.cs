@@ -1,9 +1,10 @@
+using BepInEx.Configuration;
 using PeglinQuickRestart.Core;
 using UnityEngine;
 
 namespace PeglinQuickRestart
 {
-    /// <summary>Watches the restart key, starts the restart once it's held long enough, and shows the countdown.</summary>
+    /// <summary>Watches the restart key and controller button, starts the restart once it's held long enough, and shows the countdown.</summary>
     internal class RestartKeyWatcher : MonoBehaviour
     {
         private HoldTimer _hold;
@@ -20,11 +21,18 @@ namespace PeglinQuickRestart
         private void Update()
         {
             // Unscaled time: the hold takes the same real time at any game speed, and works while paused.
-            bool held = !_restarter.Busy && Plugin.RestartKey.Value.IsPressed() && _restarter.InRestartableScene();
+            bool held = !_restarter.Busy && (IsHeld(Plugin.RestartKey.Value) || IsHeld(Plugin.ControllerRestartButton.Value))
+                && _restarter.InRestartableScene();
             if (_hold.Update(held, Time.unscaledDeltaTime))
             {
                 _restarter.TryRestart();
             }
+        }
+
+        /// <summary>A key or button set to None never counts as held.</summary>
+        private static bool IsHeld(KeyboardShortcut shortcut)
+        {
+            return shortcut.MainKey != KeyCode.None && shortcut.IsPressed();
         }
 
         private void OnGUI()
