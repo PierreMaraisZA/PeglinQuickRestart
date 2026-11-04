@@ -27,16 +27,22 @@ Going through the menus means the game does all its own cleanup and new-run setu
 
 ## Installation
 
-**With a mod manager (recommended):** install PeglinQuickRestart from Thunderstore with r2modman or the Thunderstore Mod Manager. BepInEx is installed for you.
+### With a mod manager (recommended)
 
-**Manually:**
+1. Install r2modman or the Thunderstore Mod Manager.
+2. Search for **PeglinQuickRestart** and install it.
+3. Launch Peglin.
+
+### Manually
+
 1. Install [BepInExPack_Peglin](https://thunderstore.io/c/peglin/p/BepInEx/BepInExPack_Peglin/).
-2. Put `PeglinQuickRestart.dll` in `Peglin/BepInEx/plugins/`.
-3. Start the game once to create the config file.
+2. Download `PeglinQuickRestart.dll` from the release.
+3. Put it in `Peglin/BepInEx/plugins/`.
+4. Start the game once to create the config file.
 
 ## Settings
 
-Change these in `BepInEx/config/PeglinQuickRestart.cfg` (start the game once to create it). Restart the game after changing them.
+Change these in `BepInEx/config/PeglinQuickRestart.cfg` (start the game once to create it). Changes apply immediately; changing `HoldSeconds` restarts a hold that's in progress.
 
 | Setting | Default | What it does |
 |---|---|---|
@@ -61,3 +67,14 @@ The mod also keeps the last run's setup in `BepInEx/config/PeglinQuickRestart.la
 - Clicking the left stick can nudge your aim. If you let go early to cancel, check your aim before firing.
 - The key and button do nothing on the main menu or while a screen is loading.
 - English only.
+
+## Some of my other mods
+
+- [PeglinBalatroScore](https://thunderstore.io/c/peglin/p/PierreMarais/PeglinBalatroScore/) — a Balatro-style pegs × damage score, flames and a bomb chest.
+- [PeglinFonts](https://thunderstore.io/c/peglin/p/PierreMarais/PeglinFonts/) — change the font of every text in the game, with five weights.
+- [PeglinMaxSpeed](https://thunderstore.io/c/peglin/p/PierreMarais/PeglinMaxSpeed/) — play at up to 6× speed without physics bugs.
+- [PeglinRelicRerolls](https://thunderstore.io/c/peglin/p/PierreMarais/PeglinRelicRerolls/) — reroll relic rewards and shop relics.
+
+[Check out all my Peglin mods](https://old.thunderstore.io/c/peglin/p/PierreMarais/)
+
+### [Please consider buying me a coffee ☕](https://ko-fi.com/pierremarais)

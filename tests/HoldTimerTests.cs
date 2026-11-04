@@ -50,6 +50,15 @@ namespace PeglinQuickRestart.Tests
         }
 
         [Fact]
+        public void Update_ZeroHoldFiresOnTheFirstHeldFrame()
+        {
+            var hold = new HoldTimer(0f);
+            Assert.Equal(0f, hold.Progress);
+            Assert.True(hold.Update(true, 0f));
+            Assert.False(hold.Update(true, 1f));
+        }
+
+        [Fact]
         public void Update_IgnoresNegativeTime()
         {
             var hold = new HoldTimer(1f);

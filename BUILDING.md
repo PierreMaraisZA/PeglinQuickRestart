@@ -24,8 +24,9 @@ The build copies the DLL into the game's `BepInEx\plugins\PeglinQuickRestart\` f
 dotnet test tests/PeglinQuickRestart.Tests.csproj
 ```
 
-The hold timer and the saved run setup (writing and reading `PeglinQuickRestart.lastrun.txt`) live in `src/Core` with no
-Unity references, so they can be tested without the game. GitHub Actions runs them on every push
+The hold timer, the "is this shortcut held" rule for controller buttons and the saved run setup (writing and reading
+`PeglinQuickRestart.lastrun.txt`) live in `src/Core` with no Unity references, so they can be tested
+without the game. GitHub Actions runs them on every push
 (`.github/workflows/tests.yml`); the mod itself can't be built there because it needs the game's DLLs.
 
 ## Release

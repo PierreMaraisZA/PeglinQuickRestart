@@ -1,6 +1,6 @@
 {
   "name": "PeglinQuickRestart",
-  "version_number": "1.1.0",
+  "version_number": "1.1.1",
   "website_url": "https://github.com/PierreMaraisZA/PeglinQuickRestart",
   "description": "Hold X (or L3 on a controller) to restart your run with the same class, Cruciball level, loadout and custom seed (or a new random seed).",
   "dependencies": [

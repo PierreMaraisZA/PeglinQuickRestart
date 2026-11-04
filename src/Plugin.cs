@@ -12,7 +12,7 @@ namespace PeglinQuickRestart
         // BepInEx names the config file after the GUID, so this gives BepInEx/config/PeglinQuickRestart.cfg.
         public const string Guid = "PeglinQuickRestart";
         public const string Name = "PeglinQuickRestart";
-        public const string Version = "1.1.0";
+        public const string Version = "1.1.1";
 
         internal static ManualLogSource Log;
 

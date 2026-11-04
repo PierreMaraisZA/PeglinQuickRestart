@@ -5,7 +5,7 @@
     <AssemblyName>PeglinQuickRestart</AssemblyName>
     <RootNamespace>PeglinQuickRestart</RootNamespace>
     <LangVersion>latest</LangVersion>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <!-- Override on the command line if the game lives elsewhere: dotnet build -p:GamePath="D:\Games\Peglin" -->
     <GamePath Condition="'$(GamePath)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Peglin</GamePath>
