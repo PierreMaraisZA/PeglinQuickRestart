@@ -59,6 +59,46 @@ namespace PeglinQuickRestart.Tests
         }
 
         [Fact]
+        public void NotAllowed_DoesNotCount()
+        {
+            var hold = new HoldTimer(1f);
+            Assert.False(hold.Update(true, false, 5f));
+            Assert.Equal(0f, hold.Held);
+            Assert.False(hold.Charging);
+        }
+
+        [Fact]
+        public void NotAllowedPartWay_StartsTheHoldAgain()
+        {
+            var hold = new HoldTimer(1f);
+            hold.Update(true, true, 0.8f);
+            hold.Update(true, false, 0.1f);
+            Assert.False(hold.Update(true, true, 0.5f));
+            Assert.True(hold.Update(true, true, 0.5f));
+        }
+
+        [Fact]
+        public void KeyHeldThroughARestart_DoesNotFireAgain()
+        {
+            var hold = new HoldTimer(1f);
+            Assert.True(hold.Update(true, true, 1f));
+            // The restart (not allowed), then the new run (allowed again), with the key never let go.
+            Assert.False(hold.Update(true, false, 1f));
+            Assert.False(hold.Update(true, true, 5f));
+            Assert.False(hold.Charging);
+        }
+
+        [Fact]
+        public void LetGoAfterARestart_CanFireAgain()
+        {
+            var hold = new HoldTimer(1f);
+            hold.Update(true, true, 1f);
+            hold.Update(true, false, 1f);
+            hold.Update(false, false, 0f);
+            Assert.True(hold.Update(true, true, 1f));
+        }
+
+        [Fact]
         public void Update_IgnoresNegativeTime()
         {
             var hold = new HoldTimer(1f);

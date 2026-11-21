@@ -28,6 +28,9 @@ namespace PeglinQuickRestart
         /// <summary>The run being played, if it was started (or its record loaded) this session.</summary>
         private static RunSetupRecord _current;
 
+        /// <summary>The seed of a run whose setup was looked up and isn't known, so the file isn't read again for it.</summary>
+        private static string _unknownSeed;
+
         internal static void RecordPlay(LoadoutManager loadout)
         {
             CruciballManager cruciball = LoadoutCruciballManager(loadout);
@@ -82,6 +85,11 @@ namespace PeglinQuickRestart
             {
                 return _current;
             }
+            // Already looked up for this run and not known: don't read the file again (other mods may ask every frame).
+            if (seed == _unknownSeed)
+            {
+                return null;
+            }
             RunSetupRecord saved = Load();
             if (saved != null && saved.IsForRun(seed))
             {
@@ -91,13 +99,15 @@ namespace PeglinQuickRestart
             if (StaticGameData.CurrentRunStats != null && !StaticGameData.CurrentRunStats.isCustomRun)
             {
                 CruciballManager cruciball = Resources.FindObjectsOfTypeAll<CruciballManager>().FirstOrDefault();
-                return new RunSetupRecord
+                _current = new RunSetupRecord
                 {
                     Class = StaticGameData.chosenClass.ToString(),
                     CruciballLevel = cruciball != null ? cruciball.currentCruciballLevel : 0,
                     RunSeed = seed,
                 };
+                return _current;
             }
+            _unknownSeed = seed;
             return null;
         }
 
@@ -121,6 +131,12 @@ namespace PeglinQuickRestart
     {
         private static void Prefix()
         {
+            // Another mod's restart handler owns this run (e.g. a different game mode): keep the last vanilla record.
+            if (QuickRestartApi.Registry.AnyCanHandle())
+            {
+                RunSetup.Pending = null;
+                return;
+            }
             LoadoutManager loadout = UnityEngine.Object.FindObjectOfType<LoadoutManager>();
             if (loadout == null)
             {
@@ -142,6 +158,11 @@ namespace PeglinQuickRestart
         private static void Postfix(GameInit __instance)
         {
             LoadMapData data = LoadData(__instance);
+            // A run started or continued from the menu hasn't been won (yet).
+            if (data != null && (data.NewGame || data.ContinueGame))
+            {
+                RunRestarter.Wins.RunLoaded();
+            }
             if (data != null && data.NewGame)
             {
                 RunSetup.RunStarted();

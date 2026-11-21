@@ -29,6 +29,16 @@ namespace PeglinQuickRestart.Core
         /// <summary>Call once a frame. Returns true on the one frame the hold completes.</summary>
         public bool Update(bool keyHeld, float deltaTime)
         {
+            return Update(keyHeld, true, deltaTime);
+        }
+
+        /// <summary>
+        /// Call once a frame. <paramref name="allowed"/> false (e.g. a restart or scene load under way) stops the hold
+        /// counting without forgetting that it already fired, so a key still held through a restart can't fire again
+        /// until it is let go. Returns true on the one frame the hold completes.
+        /// </summary>
+        public bool Update(bool keyHeld, bool allowed, float deltaTime)
+        {
             if (!keyHeld)
             {
                 Held = 0f;
@@ -37,6 +47,11 @@ namespace PeglinQuickRestart.Core
             }
             if (_fired)
             {
+                return false;
+            }
+            if (!allowed)
+            {
+                Held = 0f;
                 return false;
             }
             Held += Math.Max(0f, deltaTime);

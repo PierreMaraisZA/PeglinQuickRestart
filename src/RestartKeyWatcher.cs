@@ -37,11 +37,22 @@ namespace PeglinQuickRestart
         private void Update()
         {
             // Unscaled time: the hold takes the same real time at any game speed, and works while paused.
-            bool held = !_restarter.Busy && (IsHeld(Plugin.RestartKey.Value) || IsHeld(Plugin.ControllerRestartButton.Value))
-                && _restarter.InRestartableScene();
-            if (_hold.Update(held, Mathf.Min(Time.unscaledDeltaTime, MaxHoldStep)))
+            // Another mod's blocker turns the key off (checked only while it's held). A key still held through a restart
+            // or scene load doesn't count towards a new hold until it's let go.
+            bool pressed = IsHeld(Plugin.RestartKey.Value) || IsHeld(Plugin.ControllerRestartButton.Value);
+            bool allowed = pressed && !_restarter.Busy && _restarter.CanRestartHere() && !QuickRestartApi.Registry.IsBlocked();
+            if (_hold.Update(pressed, allowed, Mathf.Min(Time.unscaledDeltaTime, MaxHoldStep)))
             {
-                _restarter.TryRestart();
+                // On the run-over screen the key does what the Restart button does, so the run is recorded like End Run.
+                RunOverScreen screen = RunOverScreen.Current;
+                if (screen != null)
+                {
+                    screen.Press(RestartSources.Key);
+                }
+                else
+                {
+                    _restarter.Request(null, RestartSources.Key);
+                }
             }
         }
 

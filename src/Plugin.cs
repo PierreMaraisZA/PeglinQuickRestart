@@ -12,7 +12,7 @@ namespace PeglinQuickRestart
         // BepInEx names the config file after the GUID, so this gives BepInEx/config/PeglinQuickRestart.cfg.
         public const string Guid = "PeglinQuickRestart";
         public const string Name = "PeglinQuickRestart";
-        public const string Version = "1.1.1";
+        public const string Version = "1.2.0";
 
         internal static ManualLogSource Log;
 
@@ -20,6 +20,7 @@ namespace PeglinQuickRestart
         internal static ConfigEntry<KeyboardShortcut> ControllerRestartButton;
         internal static ConfigEntry<float> HoldSeconds;
         internal static ConfigEntry<bool> ShowHoldProgress;
+        internal static ConfigEntry<bool> ShowRestartButton;
 
         private void Awake()
         {
@@ -35,6 +36,8 @@ namespace PeglinQuickRestart
                 "How long to hold the restart key, in real seconds (not affected by game speed or pause).");
             ShowHoldProgress = Config.Bind("General", "ShowHoldProgress", true,
                 "Show a countdown at the top of the screen while the restart key is held.");
+            ShowRestartButton = Config.Bind("General", "ShowRestartButton", true,
+                "Show a Restart button next to End Run on the screen after dying. The restart key works on that screen either way.");
 
             new Harmony(Guid).PatchAll(typeof(Plugin).Assembly);
 
